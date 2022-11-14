@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@700&display=swap');
+html, body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-family:'Inria Serif', serif;
+    background-color: #ffffff;
+}
+.menu
+{
+    margin: 0;
+    font-style: normal;
+    font-family:'Inria Serif', serif;
+    background-color: #e6e3e3;
+}
+.meio
+{
+    background-color:rgb(247, 247, 247);
+}
+.pedido
+{
+    font-weight: 700;
+    font-size: 700;
+}
+.footer
+{
+    background-color: #acacac;
+}
+.bd{
+    background-color: #ffffff;
+}
+.divcliente
+{
+    margin-left: 300px;
+    margin-right: 300px;
+    background-color: #e6e3e3;
+}
+.main-login{
+    width: 100vw;
+    display: flex;
+    align-items: flex;
+    margin-right: 0px;
+}
+h6
+{
+    color: #3F3E3E;
+}
+
+.left-login{
+    width: 350;
+    height: 650;
+}
+
+.login-card{
+    width: 511px;
+    height: 340px;
+    margin-left: 30px;
+    margin-top: 100px;
+}
+
+#img_login{
+    width: 780px;
+    height: 656px;
+}
