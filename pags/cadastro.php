@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <?php include_once "../conf/Conexao.php"; ?>
+  <?php include_once "../conf/Conexao.php"; 
+    $pdo = Conexao::getInstance();
+    $state = $pdo->query("SELECT * FROM estado");
+  ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,57 +18,82 @@
       <div class="container">
         <h1 class="mt-5">Informe seus dados</h1>
         <hr>
-      <form action="<?=URL_BASE . 'pags/clientes/cliente.php'?>" method="post">
+      <form action="<?=URL_BASE . 'pags/clientes/acao.php'?>" method="post">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-xl-6">
                 <fieldset class="row">
                     <legend>Dados Pessoais</legend>
                     <div class="mb-3 col-md-6 col-xl-4">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" name="nome" class="form-control" id="nome">
+                        <label for="nome" class="form-label">Código</label>
+                        <input type="text" name="code" class="form-control" id="code" value="0" readonly>
                     </div>
+                    
+                    <div class="mb-3 col-md-6 col-xl-4">
+                        <label for="name" class="form-label">Nome</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    
                     <div class="mb-3 col-md-6 col-xl-4 ">
                       <label for="cpf" class="form-label">CPF</label>
-                      <input type="text" class="form-control " id="cpf" name="cpf">
+                      <input type="text" class="form-control " id="cpf" name="cpf" placeholder="000.000.000-00" required>
                     </div>
-                    <div class=" mb-3 col-md-6 col-xl-3">
-                      <label for="data" class="form-label">Idade</label>
-                      <input type="number" class="form-control" name="idade" id="idade">
+
+                    <div class=" mb-3 col-md-6 col-xl-4">
+                      <label for="date" class="form-label">Data de nascimento</label>
+                      <input type="date" class="form-control" name="date" id="date" required>
                     </div>
+
                     <div class="mb-3 col-md-8 col-xl-6">
-                    <label for="usuario" class="form-label">E-mail</label>
-                    <input type="email" name="email" class="form-control" id="email" name="email">
-                </div>
-                <div class="mb-3 col-md-6 col-xl-4">
-                  <label for="usuario" class="form-label">Telefone</label>
-                  <input type="tel" name="telefone" class="form-control" placeholder="(47) 847773290" id="telefone"><br>
-              </div>
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" name="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="mb-3 col-md-6 col-xl-4">
+                      <label for="telephone" class="form-label">Telefone</label>
+                      <input type="text" name="telephone" id="telephone" class="form-control" placeholder="(47) 847773290" required><br>
+                    </div>
+                    <div class="mb-3 col-md-6 col-xl-4">
+                      <label for="password" class="form-label" required>Senha</label>
+                      <input type="password" name="password" id="password" class="form-control">
+                    </div>
                 </fieldset>
             </div>
-            <div class="col-sm-12 col-md-6">
-              <fieldset class="row-3">
-                <div class="mt-4 mb-3 col-md-6 col-lg-7">
-                  <label for="endereco" class="form-label">Insira seu endereço</label>
-                  <div class="input-group">
-                    <textarea name="endereco" class="form-control" id="endereco"></textarea>
-                  <span class="input-group-text p-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
-                    <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5zm2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2h-7z"/>
-                  </svg>
-                  </span>
+            <div class="col-sm-12 col-md-6 col-xl-6">
+              <fieldset class="row ">
+
+                <legend>Endereço</legend>
+
+                <div class="mb-3 col-xl-3">
+                <label for="UF" class="form-label ">UF</label>
+                  <select name="UF" id="UF" class="form-select" required>
+                    <?php 
+                        while($uf = $state->fetch(PDO::FETCH_ASSOC)){
+                          echo "<option value='{$uf['idestado']}'>{$uf['uf']}</option>";
+                        }
+                    ?>
+                  </select>
                 </div>
-              </div>
-              </fieldset>
-              <fieldset>
-                <div class="mb-3 col-xl-4">
-                  <label for="usuario" class="form-label">Senha</label>
-                  <input type="password" name="senha" class="form-control" id="senha">
-              </div>
+
+                <div class="mb-3 col-md-6 col-xl-4">
+                <label for="city" class="form-label ">Cidade</label>
+                  <input list="citys" name="city" id="city" class="form-control" required>
+
+                  <datalist id="citys">
+                    <option value="s">s</option>
+                  </datalist>
+                </div>
+
+                <label for="address" class="form-label">Insira seu endereço</label>
+                <div class="col-xl-7 col-md-6">
+                  <input type="text" name="address" class="form-control" id="address" placeholder="Ex: Rua Nascimento Silva N°107" required>
+                </div>
+                
               </fieldset>  
             </div>
         </div>
-        <div class="mb-3">
+        <div class="">
           <a href="index.php" class="btn btn-light btn-outline-danger">Cancelar</a>
-          <button type="submit" class="btn btn-danger" name='acao' id='acao' value='salvar'>Finalizar Cadastro</button>
+          <button type="submit" class="btn btn-danger" name='action' id='action' value='create'>Finalizar Cadastro</button>
       </form>
       </div>
     </main>
