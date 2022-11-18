@@ -64,7 +64,7 @@
                 <legend>Endereço</legend>
 
                 <div class="mb-3 col-xl-3">
-                <label for="UF" class="form-label ">UF</label>
+                <label for="UF" class="form-label"><a class="text-black" href="estado/cadastro.php">Estado</a></label>
                   <select name="UF" id="UF" class="form-select" required>
                     <?php 
                         while($uf = $state->fetch(PDO::FETCH_ASSOC)){

@@ -6,7 +6,10 @@ switch($_SERVER['REQUEST_METHOD']){
     case 'GET': $action = ($_GET['action']) ? $_GET['action'] : ''; break; 
 }
 
-
+if($action == 'delete')
+excluir();
+if($action == 'create')
+create();
 
 function create(){
     $pdo = Conexao::getInstance();
@@ -23,3 +26,10 @@ function create(){
     header("location: cliente.php");
 }
 
+function excluir(){
+    $pdo = Conexao::getInstance();
+    
+    $code = isset($_GET['code']) ? $_GET['code'] : 0;
+    $pdo->query("DELETE FROM cliente WHERE idcliente=$code");
+    header("location:cliente.php");
+}

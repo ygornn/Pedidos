@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?=URL_BASE.'assets/css/style.css'?>">
     <link rel="shortcut icon" href="<?=URL_BASE .'assets/img/favicon (3).ico'?>" type="image/x-icon">
     <script src="<?= URL_BASE . '/assets/js/scripts.js'?>" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <title>Pedidos</title>
     <script> 
       const scrollSpy = new bootstrap.ScrollSpy(document.body, {
