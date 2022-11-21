@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <?php include_once "../../conf/Conexao.php"; 
-    $pdo = Conexao::getInstance();
-    $state = $pdo->query("SELECT * FROM estado");
-  ?>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?=URL_BASE.'assets/css/style.css'?>">
-    <link rel="shortcut icon" href="<?=URL_BASE .'assets/img/favicon (3).ico'?>" type="image/x-icon">
+<?php 
+    include_once "../header.php";
+    include "acao.php"; 
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+
+    if($action == "edit"){
+        $code = isset($_GET['code']) ? $_GET['code'] : 0;
+        $data = findById($code);
+    }
+?>
     <title>Cadastro</title>
 </head>
 <body>
@@ -19,22 +16,34 @@
         <h1 class="mt-5">Cadastro de Estados</h1>
         <hr>
       <form action="<?=URL_BASE . 'pags/estado/acao.php'?>" method="post">
-            <div class="col-sm-12 col-md-6 col-xl-6">
-                <fieldset class="row">
-                <div class="mb-3 col-xl-5">
-                    <label class="label-form" for="UF">UF</label>
-                    <input type="text" name="UF" id="UF" class="form-control">
+            <div class="col-sm-12 col-md-6 ">
+                <div class='mb-4 col-xl-2'>
+                  <a href="../cadastro.php" class="text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                    </svg>
+                  </a>
                 </div>
-                <div class="mb-3 col-xl-5">
-                    <label class="label-form" for="name">Nome do Estado</label>
-                    <input type="text" name="name" id="name" class="form-control">
-                </div>
-              </fieldset>  
-          <a href="../index.php" class="btn btn-light btn-outline-danger">Cancelar</a>
-          <button type="submit" class="btn btn-danger" name='action' id='action' value='create'>Cadastrar</button>
+                <fieldset class="row justify-content-center">
+                    <div class="mb-3 col-xl-9">
+                        <label class="label-form" for="code">Código</label>
+                        <input type="text" name="code" id="code" class="form-control" value="<?php if ($action  == "edit") echo $data['idestado']; else echo 0; ?>" readonly>
+                    </div>
+                    <div class="mb-3 col-xl-9">
+                        <label class="label-form" for="UF">UF</label>
+                        <input type="text" name="UF" id="UF" class="form-control" value="<?php if ($action == "edit") echo $data['uf']; ?>">
+                    </div>
+                    <div class="mb-4 col-xl-9">
+                        <label class="label-form" for="name">Nome do Estado</label>
+                        <input type="text" name="name" id="name" class="form-control" value="<?php if ($action == 'edit') echo $data['nome_estado']; ?>">
+                    </div>
+                    <div class="col-xl-9">
+                      <a href="estado.php" class="btn btn-light btn-outline-danger">Consultar</a> 
+                      <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Salvar</button>
+                    </div>
+                    </div>
+                </fieldset> 
       </form>
       </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
-</html>
+    <?php include '../footer.php'; ?>

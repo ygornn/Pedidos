@@ -25,4 +25,3 @@
      </script>
 </head>
 <body>
-<?php include 'menu.php';

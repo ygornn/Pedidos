@@ -316,9 +316,9 @@
         </div>
       </div>
       </div>
-            <div class="row justify-content-center">
-              <button class="btn-outline-secondary mt-5 p-2 col-6" type="submit" value="salvar" id="acao" name="acao">Finalizar pedido</button>
-            </div>
+          <div class="row justify-content-center">
+            <button class="btn-outline-secondary mt-5 p-2 col-6" type="submit" value="salvar" id="acao" name="acao">Finalizar pedido</button>
+          </div>
     </form>
     </main>
 <?php include 'footer.php'; ?>

@@ -1,4 +1,4 @@
-<footer class="border-top fixed-bottom text-muted bg-light">
+<footer class="border-top text-muted bg-light fixed-bottom">
       <div class="container">
         <div class="row py-1">
           <div class= "col-6 col-md-3 text-left text-md-left">

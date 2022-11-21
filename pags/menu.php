@@ -40,7 +40,7 @@
           </a>
         </li>
         <li class="nav-item ml-3 mt-3 justify-content-end">
-          <h6>Olá</h6>
+          <h6></h6>
         </li>
        
           <a href='index.php' class='nav-link mx-4'>
