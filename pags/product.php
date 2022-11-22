@@ -1,4 +1,7 @@
-<?php include 'header.php'; ?>
+<?php 
+  include 'header.php'; 
+  include 'menu.php'; 
+?>
 <div class="meio">
         <img src="<?=URL_BASE . 'assets/img/image 1.png'?>" class="img-fluid mb-5" alt="...">   
   <div class="container">
