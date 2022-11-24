@@ -18,23 +18,28 @@ switch($action){
     }
 }
 
+var_dump($_POST);
+
 function create(){
     $connection = Conexao::getInstance();
+    $data = formToArray();
 
-    $uf = strtoupper($_POST['UF'] ? $_POST['UF'] : '');
-    $name = $_POST['name'] ? $_POST['name'] : '';
-    $connection->query("INSERT INTO estado (uf, nome_estado) VALUES('$uf', '$name');");
-    header("location:estado.php");
+    $sql = "INSERT INTO pizza (sabor, valor, descricao, imagem) VALUES('{$data['flavor']}',
+    {$data['value']}, '{$data['description']}', '{$data['image']}');";
+    $connection->query($sql);
+
+    images();
+    header("location:pizza.php");
 }
 
 function remove(){
     $connection = Conexao::getInstance();
     
     $code = isset($_GET['code']) ? $_GET['code'] : 0;
-    $stmt = $connection->prepare("DELETE FROM estado WHERE idestado=:code");
+    $stmt = $connection->prepare("DELETE FROM pizza WHERE codigo=:code");
     $stmt->bindParam('code', $code, PDO::PARAM_INT);
     $stmt->execute();
-    header("location:estado.php");
+    header("location:pizza.php");
 }
 
 function update ($code){
@@ -45,9 +50,36 @@ function update ($code){
     $connection->query("UPDATE estado SET uf='$uf', nome_estado='$name' WHERE idestado=$code;");
     header("location:estado.php");
 }
+
+function formToArray(){
+    $code = isset($_POST['code']) ? $_POST['code'] : 0;
+    $flavor = isset($_POST['flavor']) ? $_POST['flavor'] : '';
+    $value = isset($_POST['value']) ? $_POST['value'] : 0;
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
+    $image = $_FILES['image']['name'];
+
+    $data = array(
+        'code' => $code,
+        'flavor' => $flavor,
+        'value' => $value,
+        'description' => $description,
+        'image' => $image
+    );
+
+    return $data;
+}
+
 function findById($code){
     $connection = Conexao::getInstance();
     $query = $connection->query("SELECT * FROM estado WHERE idestado=$code;");
     $data = $query->fetch(PDO::FETCH_ASSOC);
     return $data;
+}
+
+function images (){
+    $to = basename($_FILES['image']['name']);
+    $path = '../../assets/img/' . $to;
+    $from = $_FILES['image']['tmp_name'];
+
+    move_uploaded_file($from, $path);
 }

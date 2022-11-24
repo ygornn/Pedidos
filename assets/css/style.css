@@ -69,3 +69,8 @@ h6
 a:link{
     text-decoration: none;
 }
+
+#image{
+    width: 100px;
+    height: 70px;
+}

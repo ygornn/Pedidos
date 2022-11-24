@@ -26,6 +26,7 @@ FOREIGN KEY (idcidade) REFERENCES cidade(idcidade) ON UPDATE CASCADE
 CREATE TABLE cliente (
 idcliente INT AUTO_INCREMENT,
 nome_cliente VARCHAR(45),
+usuario VARCHAR(20),
 cpf VARCHAR(11),
 data_nascimento DATE,
 email VARCHAR(45),
@@ -35,3 +36,5 @@ idendereco INT,
 PRIMARY KEY (idcliente),
 FOREIGN KEY (idendereco) REFERENCES endereco(idendereco) ON UPDATE CASCADE
 );
+
+

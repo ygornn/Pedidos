@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <?php include_once "../conf/Conexao.php"; 
+  <?php include_once "../../conf/Conexao.php"; 
     $pdo = Conexao::getInstance();
     $state = $pdo->query("SELECT * FROM estado");
   ?>
@@ -23,19 +23,21 @@
             <div class="col-sm-12 col-md-6 col-xl-6">
                 <fieldset class="row">
                     <legend>Dados Pessoais</legend>
+                    <div class="d-flex justify-content-start">
                     <div class="mb-3 col-md-6 col-xl-4">
                         <label for="nome" class="form-label">Código</label>
                         <input type="text" name="code" class="form-control" id="code" value="0" readonly>
+                    </div>
                     </div>
                     
                     <div class="mb-3 col-md-6 col-xl-4">
                         <label for="name" class="form-label">Nome</label>
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
-                    
-                    <div class="mb-3 col-md-6 col-xl-4 ">
-                      <label for="cpf" class="form-label">CPF</label>
-                      <input type="text" class="form-control " id="cpf" name="cpf" placeholder="000.000.000-00" required>
+
+                    <div class="mb-3 col-md-6 col-xl-4">
+                        <label for="user" class="form-label">Usuário</label>
+                        <input type="text" id="user" name="user" class="form-control" required>
                     </div>
 
                     <div class=" mb-3 col-md-6 col-xl-4">
@@ -43,16 +45,12 @@
                       <input type="date" class="form-control" name="date" id="date" required>
                     </div>
 
-                    <div class="mb-3 col-md-8 col-xl-6">
+                    <div class="mb-2 col-xl-5">
                     <label for="email" class="form-label">E-mail</label>
                     <input type="email" name="email" class="form-control" id="email" name="email" required>
                     </div>
 
-                    <div class="mb-3 col-md-6 col-xl-4">
-                      <label for="telephone" class="form-label">Telefone</label>
-                      <input type="text" name="telephone" id="telephone" class="form-control" placeholder="(47) 847773290" required><br>
-                    </div>
-                    <div class="mb-3 col-md-6 col-xl-4">
+                    <div class="col-md-6 col-xl-4">
                       <label for="password" class="form-label" required>Senha</label>
                       <input type="password" name="password" id="password" class="form-control">
                     </div>
@@ -64,7 +62,7 @@
                 <legend>Endereço</legend>
 
                 <div class="mb-3 col-xl-3">
-                <label for="UF" class="form-label"><a href="estado/cadastro.php">Estado</a></label>
+                <label for="UF" class="form-label"><a href="../estado/cadastro.php">Estado</a></label>
                   <select name="UF" id="UF" class="form-select" required>
                     <?php 
                         while($uf = $state->fetch(PDO::FETCH_ASSOC)){
@@ -92,7 +90,7 @@
             </div>
         </div>
         <div class="">
-          <a href="index.php" class="btn btn-light btn-outline-danger">Cancelar</a>
+          <a href="../index.php" class="btn btn-light btn-outline-danger">Cancelar</a>
           <button type="submit" class="btn btn-danger" name='action' id='action' value='create'>Finalizar Cadastro</button>
       </form>
       </div>

@@ -13,7 +13,7 @@
           <a href="product.php" class="nav-link">Ínicio</a>
         </li>
         <li class="nav-item">
-          <a href="product.php" class="nav-link">Pizzas</a>
+          <a href="pizza/cadPizza.php" class="nav-link">Pizzas</a>
         </li>
         <li class="nav-item">
           <a href="product.php" class="nav-link">Lanches</a>

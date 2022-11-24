@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <?php include_once "../conf/Conexao.php"; ?>
+  <?php include_once "../conf/Conexao.php"; 
+    session_start();
+  ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +26,7 @@
       <input type="password" class="form-control" id="senha" name='senha'>
     <div class="d-grid col-7 mx-auto mt-5">
         <button class='btn-secondary' type="submit" value="Enviar">Entrar</button>
-       <h6 class='mt-2'>Não possui cadastro? <a href="cadastro.php">Cadastre-se</a></h6>
+       <h6 class='mt-2'>Não possui cadastro? <a href="clientes/cadastro.php">Cadastre-se</a></h6>
     </div>
 </form>
 </div>
