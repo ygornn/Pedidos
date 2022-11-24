@@ -1,5 +1,6 @@
 <?php 
     include_once "../header.php";
+    include "acao.php";
 
     $action = isset($_GET['action']) ? $_GET['action'] : '';
 
@@ -25,27 +26,27 @@
         </div>
           <div class="d-flex justify-content-center">
             <div class="me-4">
-                <input type="hidden" name="code" id="code" class="form-control" value="<?php if ($action  == "edit") echo $data['idestado']; else echo 0; ?>" readonly>
+                <input type="hidden" name="code" id="code" class="form-control" value="<?php if ($action  == "edit") echo $data['codigo']; else echo 0; ?>" readonly>
             </div>
             <div class="me-4 mb-3">
               <label class="label-form" for="flavor">Sabor</label>
-              <input type="text" name="flavor" id="flavor" class="form-control" value="<?php if ($action == "edit") echo $data['uf']; ?>">
+              <input type="text" name="flavor" id="flavor" class="form-control" value="<?php if ($action == "edit") echo $data['sabor']; ?>">
             </div>
             <div class="me-4">
                 <label class="label-form" for="value">Valor</label>
-                <input type="text" name="value" id="value" class="form-control" value="<?php if ($action == 'edit') echo $data['nome_estado']; ?>">
+                <input type="text" name="value" id="value" class="form-control" value="<?php if ($action == 'edit') echo $data['valor']; ?>">
             </div>
             </div>
             <div class="d-flex justify-content-center">
               <div class="col-xl-5 mb-3">
                   <label class="label-form" for="description">Descrição</label>
-                  <textarea type="number" name="description" id="description" class="form-control" value="<?php if ($action == 'edit') echo $data['nome_estado']; ?>"></textarea>
+                  <textarea type="number" name="description" id="description" class="form-control"><?php if ($action == 'edit') echo $data['descricao']; ?></textarea>
               </div>
           </div>
           <div class="d-flex justify-content-center">
             <div class="col-xl-5 mb-3">
-              <label class="label-form" for="image">Imagem</label>
-              <input type="file" name="image" id="image" class="form-control">
+              <label class="label-form" for="pic">Imagem</label>
+              <input type="file" name="pic" id="pic" class="form-control" value="<?php if($action == 'edit') echo $data['imagem'] ?>">
             </div>
           </div>
           <div class="d-flex justify-content-center">

@@ -18,8 +18,6 @@ switch($action){
     }
 }
 
-var_dump($_POST);
-
 function create(){
     $connection = Conexao::getInstance();
     $data = formToArray();
@@ -45,10 +43,13 @@ function remove(){
 function update ($code){
     $connection = Conexao::getInstance();
 
-    $uf = strtoupper($_POST['UF'] ? $_POST['UF'] : '');
-    $name = $_POST['name'] ? $_POST['name'] : '';
-    $connection->query("UPDATE estado SET uf='$uf', nome_estado='$name' WHERE idestado=$code;");
-    header("location:estado.php");
+    $data = formToArray();
+    $sql = "UPDATE pizza SET sabor='{$data['flavor']}', valor={$data['value']}, descricao='{$data['description']}',
+    imagem='{$data['image']}' WHERE codigo={$data['code']};";
+    $connection->query($sql);
+
+    images();
+    header("location:pizza.php");
 }
 
 function formToArray(){
@@ -56,7 +57,7 @@ function formToArray(){
     $flavor = isset($_POST['flavor']) ? $_POST['flavor'] : '';
     $value = isset($_POST['value']) ? $_POST['value'] : 0;
     $description = isset($_POST['description']) ? $_POST['description'] : '';
-    $image = $_FILES['image']['name'];
+    $image = $_FILES['pic']['name'];
 
     $data = array(
         'code' => $code,
@@ -71,15 +72,15 @@ function formToArray(){
 
 function findById($code){
     $connection = Conexao::getInstance();
-    $query = $connection->query("SELECT * FROM estado WHERE idestado=$code;");
+    $query = $connection->query("SELECT * FROM pizza WHERE codigo=$code;");
     $data = $query->fetch(PDO::FETCH_ASSOC);
     return $data;
 }
 
 function images (){
-    $to = basename($_FILES['image']['name']);
+    $to = basename($_FILES['pic']['name']);
     $path = '../../assets/img/' . $to;
-    $from = $_FILES['image']['tmp_name'];
+    $from = $_FILES['pic']['tmp_name'];
 
     move_uploaded_file($from, $path);
 }

@@ -10,16 +10,16 @@
     <div class="container">
       <ul class="navbar-nav  justify-content-center">
         <li class="nav-item">
-          <a href="product.php" class="nav-link">Ínicio</a>
+          <a href="../product.php" class="nav-link">Ínicio</a>
         </li>
         <li class="nav-item">
-          <a href="pizza/cadPizza.php" class="nav-link">Pizzas</a>
+          <a href="pizza/cadastro.php" class="nav-link">Pizzas</a>
         </li>
         <li class="nav-item">
-          <a href="product.php" class="nav-link">Lanches</a>
+          <a href="lanche/cadastro.php" class="nav-link">Lanches</a>
         </li>
         <li class="nav-item">
-          <a href="product.php" class="nav-link">Bebidas</a>
+          <a href="bebida/cadastro.php" class="nav-link">Bebidas</a>
         </li>
       </ul>
     <div class="">
