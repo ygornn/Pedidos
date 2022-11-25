@@ -1,6 +1,6 @@
 <footer class="border-top text-muted bg-light">
       <div class="container">
-        <div class="row py-1">
+        <div class="row ">
           <div class= "col-6 col-md-3 text-left text-md-left">
              &copy; 2022 - Pedidos
           </div>

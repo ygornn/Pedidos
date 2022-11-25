@@ -23,10 +23,10 @@
 
     <main class="flex-fill">
       <form action="pedidos.php" method="post">
-      <hr class="mt-3 p-2 mt-5">
+      <hr class="mt-5">
     </div>
       <center class="p-5"><h1 class="pedido">FAÇA SEU PEDIDO</h1></center>
-      <div class="row g-3 p-3">
+      <div class="row g-3">
         <div id="pizzas" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 d-flex alling-itens-stretch">
           <div class="card text-center bg-light">
             <img src="<?=URL_BASE . 'assets/img/1.webp'?>" class="card-image-top" alt="">

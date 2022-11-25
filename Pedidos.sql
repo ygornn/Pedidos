@@ -37,4 +37,29 @@ PRIMARY KEY (idcliente),
 FOREIGN KEY (idendereco) REFERENCES endereco(idendereco) ON UPDATE CASCADE
 );
 
+ CREATE TABLE pizza (
+ codigo INT NOT NULL AUTO_INCREMENT,
+ sabor VARCHAR(45),
+ valor DECIMAL(6,2),
+ descricao VARCHAR(255),
+ imagem VARCHAR(95),
+ PRIMARY KEY (codigo)
+ );
 
+CREATE TABLE lanche (
+ codigo INT NOT NULL AUTO_INCREMENT,
+ sabor VARCHAR(45),
+ valor DECIMAL(6,2),
+ descricao VARCHAR(255),
+ imagem VARCHAR(95),
+ PRIMARY KEY (codigo)
+ );
+
+CREATE TABLE bebida (
+ codigo INT NOT NULL AUTO_INCREMENT,
+ sabor VARCHAR(45),
+ valor DECIMAL(6,2),
+ marca VARCHAR(255),
+ imagem VARCHAR(95),
+ PRIMARY KEY (codigo)
+ );
