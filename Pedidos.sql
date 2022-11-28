@@ -23,17 +23,23 @@ PRIMARY KEY (idendereco),
 FOREIGN KEY (idcidade) REFERENCES cidade(idcidade) ON UPDATE CASCADE
 );
 
+CREATE TABLE tipoUsuario (
+codigo INT NOT NULL AUTO_INCREMENT,
+descricao VARCHAR(45),
+PRIMARY KEY (codigo)
+);
+
 CREATE TABLE cliente (
-idcliente INT AUTO_INCREMENT,
+codigo INT AUTO_INCREMENT,
 nome_cliente VARCHAR(45),
 usuario VARCHAR(20),
-cpf VARCHAR(11),
 data_nascimento DATE,
 email VARCHAR(45),
-telefone VARCHAR(15),
 senha VARCHAR(60),
+codigo_tipousuario INT,
 idendereco INT,
-PRIMARY KEY (idcliente),
+PRIMARY KEY (codigo),
+FOREIGN KEY (codigo_tipousuario) REFERENCES tipousuario(codigo) ON UPDATE CASCADE,
 FOREIGN KEY (idendereco) REFERENCES endereco(idendereco) ON UPDATE CASCADE
 );
 
