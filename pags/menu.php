@@ -10,7 +10,7 @@
     <div class="container">
       <ul class="navbar-nav  justify-content-center">
         <li class="nav-item">
-          <a href="../product.php" class="nav-link">Ínicio</a>
+          <a href="product.php" class="nav-link">Ínicio</a>
         </li>
         <li class="nav-item">
           <a href="pizza/cadastro.php" class="nav-link">Pizzas</a>

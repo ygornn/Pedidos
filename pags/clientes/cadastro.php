@@ -4,6 +4,7 @@
   <?php include_once "../../conf/Conexao.php"; 
     $pdo = Conexao::getInstance();
     $state = $pdo->query("SELECT * FROM estado");
+    $city = $pdo->query("SELECT * FROM cidade");
   ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,12 +74,13 @@
                 </div>
 
                 <div class="mb-3 col-md-6 col-xl-4">
-                <label for="city" class="form-label ">Cidade</label>
-                  <input list="citys" name="city" id="city" class="form-control" required>
-
-                  <datalist id="citys">
-                    <option value="s">s</option>
-                  </datalist>
+                <label for="city" class="form-label "><a href="../cidade/cadastro.php">Cidade</a></label>
+                  <select name="citys" id="citys" class="form-select">
+                    <?php 
+                    while($citys = $city->fetch(PDO::FETCH_ASSOC)){
+                      echo "<option value='{$citys['idestado']}'>{$citys['nome_cidade']}</option>";
+                    } ?>
+                  </select>
                 </div>
 
                 <label for="address" class="form-label">Insira seu endereço</label>
