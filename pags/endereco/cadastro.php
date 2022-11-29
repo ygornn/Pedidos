@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <?php include_once "../../conf/Conexao.php"; 
+  <?php 
+    include_once "../../conf/Conexao.php"; 
+    include 'acao.php';
     $pdo = Conexao::getInstance();
     $state = $pdo->query("SELECT * FROM estado;");
     $city = $pdo->query("SELECT * FROM cidade");
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+
+    if($action == 'edit'){
+      $code = isset($_GET['code']) ? $_GET['code'] : 0;
+      $data = findById($code);
+      var_dump($data);
+    }
   ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,12 +42,16 @@
       <div class="d-flex justify-content-center">
         <div class="col-md-6 col-xl-2 ps-4">
           <label for="code" class="form-label">Código</label>
-          <input type="text" name="code" class="form-control" id="code" value="0" readonly>
+          <input type="text" name="code" class="form-control" id="code" value="<?php if($action == 'edit') echo $data['idendereco']; else echo 0; ?>" readonly>
         </div>
         <div class="mb-4 col-xl-2 me-5 ps-5">
         <label for="city" class="form-label "><a href="../cidade/cadastro.php">Cidade</a></label>
           <select name="city" id="city" class="form-select">
             <?php 
+            if($action == 'edit'){
+              $city = $pdo->query("SELECT * FROM cidade WHERE idcidade!={$data['idcidade']};");
+              echo "<option value='{$data['idcidade']}' selected>{$data['nome_cidade']}</option>";
+            }
             while($citys = $city->fetch(PDO::FETCH_ASSOC)){
               echo "<option value='{$citys['idcidade']}'>{$citys['nome_cidade']}</option>";
             } ?>
@@ -50,7 +63,8 @@
         
         <div class="mb-4 col-md-6 col-xl-4 pe-4">
         <label for="address" class="form-label">Insira seu endereço</label>
-            <input type="text" name="address" class="form-control" id="address" placeholder="Ex: Rua Nascimento Silva N°107" required>
+            <input type="text" name="address" class="form-control" id="address" placeholder="Ex: Rua Nascimento Silva N°107"
+            value="<?php if($action == 'edit') echo $data['nome_endereco'] ?>" required>
           </div>
         </div>
         </div>
@@ -59,8 +73,21 @@
           <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Finalizar cadastro</button>
         </div>
         </div>
-    </div>
-    </div>
+      <?php 
+        session_start();
+        if(isset($_SESSION['usuario']))
+        {
+      ?>
+        <div class="d-flex justify-content-end">
+        <div class='mb-4 col-xl-2'>
+        <a href="endereco.php" style="border: none; color:black; background: white;">Consultar
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+          </svg>
+        </a>
+        </div>
+        </div>
+      <?php } ?>
   </fieldset>
   </form>
   </main>

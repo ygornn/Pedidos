@@ -25,7 +25,8 @@ function create(){
     $connection->query("INSERT INTO endereco (idcidade, nome_endereco) VALUES({$data['city']}, '{$data['address']}');");
     $addressData = addressData();
     updateClient($addressData['idendereco']);
-    header("location:../index.php");
+
+    sessionVerify();
 }
 
 function remove(){
@@ -78,7 +79,18 @@ function updateClient($id){
 
 function findById($code){
     $connection = Conexao::getInstance();
-    $query = $connection->query("SELECT * FROM endereco");
+    $query = $connection->query("SELECT idendereco, nome_endereco, cidade.idcidade, nome_cidade FROM
+    endereco NATURAL JOIN cidade WHERE idendereco=$code;");
     $data = $query->fetch(PDO::FETCH_ASSOC);
     return $data;
+}
+
+function sessionVerify (){
+    session_start();
+    if(!isset($_SESSION['usuario'])){
+        header('location:../index.php');
+    }
+    else{
+        header('location:endereco.php');
+    }
 }

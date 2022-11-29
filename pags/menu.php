@@ -16,13 +16,22 @@
           <a href="product.php" class="nav-link">Ínicio</a>
         </li>
         <li class="nav-item">
-          <a href="pizza/cadastro.php" class="nav-link">Pizzas</a>
+          <a href="pizza/pizza.php" class="nav-link">Pizzas</a>
         </li>
         <li class="nav-item">
-          <a href="lanche/cadastro.php" class="nav-link">Lanches</a>
+          <a href="lanche/lanche.php" class="nav-link">Lanches</a>
         </li>
         <li class="nav-item">
-          <a href="bebida/cadastro.php" class="nav-link">Bebidas</a>
+          <a href="bebida/bebida.php" class="nav-link">Bebidas</a>
+        </li>
+        <li class="nav-item">
+          <a href="estado/estado.php" class="nav-link">Estados</a>
+        </li>
+        <li class="nav-item">
+          <a href="cidade/cidade.php" class="nav-link">Cidades</a>
+        </li>
+        <li class="nav-item">
+          <a href="endereco/endereco.php" class="nav-link">Endereços</a>
         </li>
       </ul>
     <div class="d-flex justify-content-end">
