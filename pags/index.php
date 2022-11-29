@@ -3,6 +3,8 @@
 <head>
   <?php include_once "../conf/Conexao.php"; 
     session_start();
+    if(isset($_SESSION['usuario']))
+    header('location:product.php');
   ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,13 +21,13 @@
     </div>
     <div class="login-card">
        <legend class="mt-5">LOGIN</legend>
-<form action='product.php' method='post'>
+<form action='login.php' method='post'>
       <label for="text" class="form-label mt-2">Usuário</label>
-      <input type="text" class="form-control" id="usuario" name='usuario'>
+      <input type="text" class="form-control" id="user" name='user'>
       <label for="exampleInputPassword1" class="form-label mt-2">Senha</label>
-      <input type="password" class="form-control" id="senha" name='senha'>
+      <input type="password" class="form-control" id="password" name='password'>
     <div class="d-grid col-7 mx-auto mt-5">
-        <button class='btn-secondary' type="submit" value="Enviar">Entrar</button>
+        <button class='btn-secondary' type="submit" name="action" id="action" value="login">Entrar</button>
        <h6 class='mt-2'>Não possui cadastro? <a href="clientes/cadastro.php">Cadastre-se</a></h6>
     </div>
 </form>

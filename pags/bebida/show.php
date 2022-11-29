@@ -1,6 +1,8 @@
 <?php 
     include_once "../header.php";
     include "acao.php";
+    include_once '../login.php';
+    verifySession();
 
     $code = isset($_GET['code']) ? $_GET['code'] : 0;
     $data = findById($code);

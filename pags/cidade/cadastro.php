@@ -1,6 +1,7 @@
 <?php 
     include_once "../header.php";
     include "acao.php"; 
+
     $action = isset($_GET['action']) ? $_GET['action'] : '';
     $connection = Conexao::getInstance();
     $query = $connection->query("SELECT * FROM estado;");
@@ -33,7 +34,7 @@
           </div>
           <div class="d-flex justify-content-center">
             <div class="mb-3 col-xl-3">
-              <label class="label-form" for="UF">Estado</label>
+              <label class="label-form" for="UF"><a href="../estado/cadastro.php">Estado</a></label>
               <select name="uf" id="uf" class="form-select">
                 <?php 
                   if($action == 'edit'){

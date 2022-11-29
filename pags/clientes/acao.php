@@ -25,14 +25,23 @@ function create(){
             VALUES('{$data['name']}', '{$data['user']}', '" . date("Y-m-d", $data['date']) . "', '{$data['email']}',
              '{$data['password']}', {$data['usertype']});";
     $pdo->query($sql);
-    header("location: ../endereco/endereco.php");
+    header("location: ../endereco/cadastro.php");
+}
+
+function update (){
+    $connection = Conexao::getInstance();
+
+    $data = formToArray();
+    $connection->query("UPDATE cliente SET nome_cliente={$data['name']}, usuario='{$data['user']}',
+    data_nascimento='" . date('Y-m-d', $data['date']) . "', email={$data['email']} WHERE codigo={$data['code']};");
+    header("location:cliente.php");
 }
 
 function remove(){
     $connection = Conexao::getInstance();
     
     $code = isset($_GET['code']) ? $_GET['code'] : 0;
-    $stmt = $connection->prepare("DELETE FROM cliente WHERE idcliente=:code");
+    $stmt = $connection->prepare("DELETE FROM cliente WHERE codigo=:code");
     $stmt->bindParam('code', $code, PDO::PARAM_INT);
     $stmt->execute();
     header("location:cliente.php");
@@ -41,7 +50,7 @@ function remove(){
 function formToArray(){
     $code = isset($_POST['code']) ? $_POST['code'] : 0;
     $name = isset($_POST['name']) ? $_POST['name'] : '';
-    $user = isset($_POST['user']) ? $_POST['user'] : '';
+    $user = strtolower(isset($_POST['user']) ? $_POST['user'] : '');
     $date = strtotime(isset($_POST['date']) ? $_POST['date'] : '');
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $password = sha1(isset($_POST['password']) ? $_POST['password'] : '');

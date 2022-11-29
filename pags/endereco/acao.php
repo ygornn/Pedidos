@@ -22,47 +22,63 @@ function create(){
     $connection = Conexao::getInstance();
 
     $data = formToArray();
-    $connection->query("INSERT INTO cidade (idestado, nome_cidade) VALUES('{$data['uf']}', '{$data['name']}');");
-    header("location:cidade.php");
+    $connection->query("INSERT INTO endereco (idcidade, nome_endereco) VALUES({$data['city']}, '{$data['address']}');");
+    $addressData = addressData();
+    updateClient($addressData['idendereco']);
+    header("location:../index.php");
 }
 
 function remove(){
     $connection = Conexao::getInstance();
     
     $code = isset($_GET['code']) ? $_GET['code'] : 0;
-    $stmt = $connection->prepare("DELETE FROM cidade WHERE idcidade=:code");
+    $stmt = $connection->prepare("DELETE FROM endereco WHERE idendereco=:code");
     $stmt->bindParam('code', $code, PDO::PARAM_INT);
     $stmt->execute();
-    header("location:cidade.php");
+    header("location:endereco.php");
 }
 
 function update (){
     $connection = Conexao::getInstance();
 
     $data = formToArray();
-    $connection->query("UPDATE cidade SET idestado={$data['uf']}, nome_cidade='{$data['name']}' 
-    WHERE idcidade={$data['code']};");
-    header("location:cidade.php");
+    $connection->query("UPDATE endereco SET idcidade={$data['city']}, nome_endereco='{$data['address']}' 
+    WHERE idendereco={$data['code']};");
+    header("location:endereco.php");
 }
 
 function formToArray(){
     $code = isset($_POST['code']) ? $_POST['code'] : 0;
-    $uf = isset($_POST['uf']) ? $_POST['uf'] : 0;
-    $name = isset($_POST['name']) ? $_POST['name'] : '';
+    $city = isset($_POST['city']) ? $_POST['city'] : 0;
+    $address = isset($_POST['address']) ? $_POST['address'] : '';
 
     $data = array(
         'code' => $code,
-        'uf'   => $uf,
-        'name' => $name
+        'city' => $city,
+        'address'=> $address
     );
 
     return $data;
 }
 
+function addressData(){
+    $connection = Conexao::getInstance();
+    $query = $connection->query("SELECT * FROM endereco ORDER BY idendereco DESC LIMIT 1;");
+    $addressData = $query->fetch(PDO::FETCH_ASSOC);
+    return $addressData;
+}
+
+function updateClient($id){
+    $connection = Conexao::getInstance();
+    $query = $connection->query("SELECT * FROM cliente ORDER BY codigo DESC LIMIT 1;");
+    $data = $query->fetch(PDO::FETCH_ASSOC);
+    $sql = "UPDATE cliente SET idendereco={$id} WHERE codigo={$data['codigo']};";
+    $connection->exec($sql);
+}
+
 function findById($code){
     $connection = Conexao::getInstance();
-    $query = $connection->query("SELECT idcidade, cidade.idestado, nome_cidade, nome_estado
-    FROM cidade NATURAL JOIN estado WHERE idcidade=$code;");
+    $query = $connection->query("SELECT * FROM endereco");
     $data = $query->fetch(PDO::FETCH_ASSOC);
     return $data;
 }

@@ -1,10 +1,15 @@
 <?php 
-    $path = '../conf/Conexao.php';
-    if(file_exists($path))
+  $path = '../conf/Conexao.php';
+  if(file_exists($path)){
     include_once $path;
-    $path = '../../conf/Conexao.php';
-    if(file_exists($path))
+    include_once 'login.php';
+  }
+  $path = '../../conf/Conexao.php';
+  if(file_exists($path)){
     include_once $path;
+    include_once '../login.php';
+  }
+  verifySession();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -18,10 +23,5 @@
     <script src="<?= URL_BASE . '/assets/js/scripts.js'?>" defer></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <title>Pedidos</title>
-    <script> 
-      const scrollSpy = new bootstrap.ScrollSpy(document.body, {
-         target: 'nav' 
-       })
-     </script>
 </head>
 <body>

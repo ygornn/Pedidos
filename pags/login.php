@@ -1,41 +1,57 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="css/style.css">
+
 <?php
+    $path = '../conf/Conexao.php';
+    if(file_exists($path))
+    include_once $path;
+    $path = '../../conf/Conexao.php';
+    if(file_exists($path))
+    include_once $path;
 
-include('acao.php');
+    $connection = Conexao::getInstance();
+    $query = $connection->query("SELECT usuario, senha FROM cliente;");
+    $action = isset($_POST['action']) ? $_POST['action'] : '';
 
-session_start();
-
-$_SESSION['logado'] = $_SESSION['logado'] ? : false;
-$conteudo = objeto_json();
-$p_usuario = isset($_POST['usuario']) ? $_POST['usuario'] : 0;
-$p_senha = isset($_POST['senha']) ? $_POST['senha'] : 0;
-
-foreach($conteudo as $key)
-{
-    $email = $key->email;
-    $senha = $key->senha;
-    $nome = $key->nome;
-
-
-    if($p_usuario == $email && $p_senha == $senha)
-    {
-
-    $_SESSION['usuario'] = $p_usuario;
-    $_SESSION['senha'] = $p_senha;
-    $_SESSION['logado'] = true;
-
-    header('location:menu.php');
+    switch($_SERVER['REQUEST_METHOD']) {
+        case 'GET':  
+            $action = isset($_GET['action']) ? $_GET['action'] : ""; 
+            break;
+        case 'POST': 
+            $action = isset($_POST['action']) ? $_POST['action'] : ""; 
+            break;
     }
-};
 
-if(!$_SESSION['logado'])
-{
-    header('location:menu.php');
-}
+    if($action == 'login'){
 
+        $user = strtolower(isset($_POST['user']) ? $_POST['user'] : '');
+        $password = sha1(isset($_POST['password']) ? $_POST['password'] : '');
 
+        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+        
+            if($user == $data['usuario'] and $password == $data['senha']){
+                session_start();
+                $_SESSION['usuario'] = $user;
+                header("location:product.php");
+            }
+            else{
+                header("location:index.php");
+            }
+        }
+    }
+    elseif ($action == 'logoff'){
+        session_start();
+        session_unset();
+        header("location:index.php");
 
-
+    }
+    function verifySession (){
+        session_start();
+        if(!isset($_SESSION['usuario'])){
+            $path = 'index.php';
+            if(file_exists($path))
+            header("location: $path");
+            $path = '../index.php';
+            if(file_exists($path))
+            header("location: $path");
+        }
+    }
 
