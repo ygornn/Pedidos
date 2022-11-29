@@ -2,8 +2,8 @@
 include_once "../../conf/Conexao.php";
 
 switch($_SERVER['REQUEST_METHOD']){
-    case 'POST': $action = ($_POST['action']) ? $_POST['action'] : ''; break;
-    case 'GET': $action = ($_GET['action']) ? $_GET['action'] : ''; break; 
+    case 'GET': $action = isset($_GET['action']) ? $_GET['action'] : ''; break;
+    case 'POST': $action = isset($_POST['action']) ? $_POST['action'] : ''; break; 
 }
 
 switch($action){
@@ -32,8 +32,10 @@ function update (){
     $connection = Conexao::getInstance();
 
     $data = formToArray();
-    $connection->query("UPDATE cliente SET nome_cliente={$data['name']}, usuario='{$data['user']}',
-    data_nascimento='" . date('Y-m-d', $data['date']) . "', email={$data['email']} WHERE codigo={$data['code']};");
+    $connection->query("UPDATE cliente SET nome_cliente='{$data['name']}', usuario='{$data['user']}',
+    data_nascimento='" . date('Y-m-d', $data['date']) . "', email='{$data['email']}', codigo_tipousuario={$data['usertype']},
+    idendereco={$data['address']} 
+    WHERE codigo={$data['code']};");
     header("location:cliente.php");
 }
 
@@ -55,6 +57,7 @@ function formToArray(){
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $password = sha1(isset($_POST['password']) ? $_POST['password'] : '');
     $userType = isset($_POST['usertype']) ? $_POST['usertype'] : 0;
+    $address = isset($_POST['address']) ? $_POST['address'] : '';
 
     $data = array(
         'code' => $code,
@@ -63,8 +66,18 @@ function formToArray(){
         'date' => $date,
         'email'=> $email,
         'password' => $password,
-        'usertype' => $userType
+        'usertype' => $userType,
+        'address'  => $address
     );
 
+    return $data;
+}
+
+function findById($code){
+    $connection = Conexao::getInstance();
+    $query = $connection->query("SELECT cliente.codigo, nome_cliente, usuario, data_nascimento, email, cliente.codigo_tipousuario,
+    descricao, cliente.idendereco, nome_endereco FROM cliente JOIN tipousuario ON cliente.codigo_tipousuario = tipousuario.codigo
+    JOIN endereco ON cliente.idendereco = endereco.idendereco WHERE cliente.codigo=$code;");
+    $data = $query->fetch(PDO::FETCH_ASSOC);
     return $data;
 }

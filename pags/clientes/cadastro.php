@@ -2,8 +2,16 @@
 <html lang="pt-br">
 <head>
   <?php include_once "../../conf/Conexao.php"; 
+  include "acao.php";
     $pdo = Conexao::getInstance();
-    $query = $pdo->query("SELECT * FROM tipousuario;");
+    $userType = $pdo->query("SELECT * FROM tipousuario;");
+
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+    if($action == "edit"){
+        $code = isset($_GET['code']) ? $_GET['code'] : 0;
+        $data = findById($code);
+        $address = $pdo->query("SELECT * FROM endereco");
+    }
   ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,21 +33,25 @@
         </a>
       </div>
       <div class="d-flex justify-content-center">
-        <h1 class="mb-5">Informe seus dados</h1>
+        <h1 class="mb-5"><?php if($action == 'edit') echo "Edição usuários"; else echo "Insira seus dados" ?></h1>
         <form action="<?=URL_BASE . 'pags/clientes/acao.php'?>" method="post">
       </div>
       <fieldset>  
       <div class="d-flex justify-content-center">
         <div class="col-md-6 col-xl-2 ps-4">
           <label for="code" class="form-label">Código</label>
-          <input type="text" name="code" class="form-control" id="code" value="0" readonly>
+          <input type="text" name="code" class="form-control" id="code" value="<?php if($action == 'edit') echo $data['codigo']; else echo 0; ?>" readonly>
         </div>
       <div class="col-md-6 col-xl-3 px-4">
           <label for="usertype" class="form-label"><a href="../tipousuario/tipousuario.php">Tipo usuário</a></label>
           <select name="usertype" id="usertype" class="form-select">
             <?php 
-              while($userType = $query->fetch(PDO::FETCH_ASSOC)){
-                echo "<option value='{$userType['codigo']}'>{$userType['descricao']}</option>";
+              if($action == 'edit'){
+                $userType = $pdo->query("SELECT * FROM tipousuario WHERE codigo!={$data['codigo_tipousuario']};");
+                echo "<option value='{$data['codigo_tipousuario']}' select>{$data['descricao']}</option>";
+              }
+              while($userTypeData = $userType->fetch(PDO::FETCH_ASSOC)){
+                echo "<option value='{$userTypeData['codigo']}'>{$userTypeData['descricao']}</option>";
               }
             ?>
           </select>
@@ -48,26 +60,28 @@
       <div class="d-flex justify-content-center mt-4">
         <div class="mb-4 col-md-6 col-xl-2 me-5">
           <label for="name" class="form-label">Nome</label>
-          <input type="text" id="name" name="name" class="form-control" required>
+          <input type="text" id="name" name="name" class="form-control" value="<?php if($action == 'edit') echo $data['nome_cliente'] ?>" required>
         </div>
 
         <div class="mb-4 col-md-6 col-xl-2">
             <label for="user" class="form-label">Usuário</label>
-            <input type="text" id="user" name="user" class="form-control" required>
+            <input type="text" id="user" name="user" class="form-control" value="<?php if($action == 'edit') echo $data['usuario']; ?>" required>
         </div>
         </div>
         </div>
       <div class="d-flex justify-content-center">
       <div class="col-md-6 col-xl-2 ps-4">
         <label for="date" class="form-label">Data de nascimento</label>
-        <input type="date" class="form-control" name="date" id="date" required>
+        <input type="date" class="form-control" name="date" id="date" value="<?php if($action == 'edit') 
+        echo $data['data_nascimento']; ?>"  required>
       </div>
 
       <div class="col-xl-3 px-4">
         <label for="email" class="form-label">E-mail</label>
-        <input type="email" name="email" class="form-control" id="email" name="email" required>
+        <input type="email" name="email" class="form-control" id="email" name="email" value="<?php if($action == 'edit') echo $data['email']; ?>"  required>
       </div>
       </div>
+      <?php if($action == '') {?>
       <div class="container">
         <div class="col-10">
           <div class="d-flex justify-content-center">
@@ -77,9 +91,29 @@
             </div>
         </div>
       </div>
+      <?php } else{?>
+        <div class="container">
+        <div class="col-10">
+          <div class="d-flex justify-content-center">
+            <div class="col-md-6 col-xl-3 mt-4">
+              <label for="address" class="form-label" required>Endereço</label>
+              <select name="address" id="address" class="form-select">
+                <?php
+                  if($action == 'edit'){
+                    $address = $pdo->query("SELECT * FROM endereco WHERE idendereco!={$data['idendereco']};");
+                    echo "<option value='{$data['idendereco']}' select>{$data['nome_endereco']}</option>";
+                  }
+                  while ($addressData = $address->fetch(PDO::FETCH_ASSOC)) {
+                    echo "<option value='{$addressData['idendereco']}'>{$addressData['nome_endereco']}</option>";
+                } ?>
+              </select>
+            </div>
+        </div>
+      </div>
+      <?php } ?>
       <div class="d-flex justify-content-end">
       <div class='mb-4 col-xl-2'>
-      <button type="submit" name="action" id="action" value="save" style="border: none; background: white;">Prosseguir
+      <button type="submit" name="action" id="action" value="save" style="border: none; background: white;"><?php if($action == 'edit') echo "Editar"; else echo "Prosseguir"; ?>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
         </svg>
