@@ -9,7 +9,6 @@
     if($action == "edit"){
         $code = isset($_GET['code']) ? $_GET['code'] : 0;
         $data = findById($code);
-        var_dump($data);
     }
 ?>
     <title>Cadastro de Cidades</title>

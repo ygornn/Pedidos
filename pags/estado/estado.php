@@ -9,12 +9,21 @@
 <h1 class='mt-5' >Estados</h1>
 <hr>
     <div class='mb-4 col-xl-2'>
-        <a href="cadastro.php" class="text-black">
+        <a href="../product.php" class="text-black">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
         </svg>
         </a>
     </div>
+    <div class="d-flex justify-content-start">
+        <div class="col-xl-2 pt-4">
+          <a href="cadastro.php" style="color: black">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-map-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5V.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0L5 14.09zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1-.5-.1z"/>
+          </svg>
+          </a>
+        </div>
+        </div>
         <div class="row">
         <form action="" method="post">
         <div class="d-flex justify-content-end">

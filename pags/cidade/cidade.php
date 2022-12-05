@@ -2,19 +2,29 @@
   include_once '../header.php';
   $search = isset($_POST['search']) ? $_POST['search'] : '';
   $connection = Conexao::getInstance();
-  $query = $connection->query("SELECT * FROM cidade WHERE nome_cidade LIKE '%$search%';");
+  $query = $connection->query("SELECT idcidade, cidade.idestado, nome_cidade, nome_estado
+  FROM cidade NATURAL JOIN estado WHERE nome_cidade LIKE '%$search%';");
 ?>
 <main class="mb-5 pb-5 mb-md-0">
 <div class="container">
 <h1 class='mt-5'>Cidades</h1>
 <hr>
     <div class='mb-4 col-xl-2'>
-        <a href="cadastro.php" class="text-black">
+        <a href="../product.php" class="text-black">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
         </svg>
         </a>
     </div>
+    <div class="d-flex justify-content-start">
+        <div class="col-xl-2 pt-4">
+          <a href="cadastro.php" style="color: black">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-map-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.598-.49L10.5.99 5.598.01a.5.5 0 0 0-.196 0l-5 1A.5.5 0 0 0 0 1.5v14a.5.5 0 0 0 .598.49l4.902-.98 4.902.98a.502.502 0 0 0 .196 0l5-1A.5.5 0 0 0 16 14.5V.5zM5 14.09V1.11l.5-.1.5.1v12.98l-.402-.08a.498.498 0 0 0-.196 0L5 14.09zm5 .8V1.91l.402.08a.5.5 0 0 0 .196 0L11 1.91v12.98l-.5.1-.5-.1z"/>
+          </svg>
+          </a>
+        </div>
+        </div>
         <div class="row">
         <form action="" method="post">
         <div class="d-flex justify-content-end">
@@ -33,7 +43,7 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Código do estado</th>
+          <th>Estado</th>
           <th>Nome da Cidade</th>
           <th>Ação</th>
         </tr>
@@ -41,7 +51,7 @@
       <tbody>
       <?php 
         while($city = $query->fetch(PDO::FETCH_ASSOC)){
-          echo "<tr> <td>{$city['idcidade']}</td> <td>{$city['idestado']}</td> <td>{$city['nome_cidade']}</td>
+          echo "<tr> <td>{$city['idcidade']}</td> <td>{$city['nome_estado']}</td> <td>{$city['nome_cidade']}</td>
           <td><a class='btn btn-primary btn-sm' href='show.php?code={$city['idcidade']}'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-vcard-fill' viewBox='0 0 16 16'>
           <path d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z'/>
           </svg></a></td>

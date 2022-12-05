@@ -91,6 +91,6 @@ function sessionVerify (){
         header('location:../index.php');
     }
     else{
-        header('location:endereco.php');
+        header('location:product.php');
     }
 }

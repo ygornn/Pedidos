@@ -27,7 +27,7 @@
       <label for="exampleInputPassword1" class="form-label mt-2">Senha</label>
       <input type="password" class="form-control" id="password" name='password'>
     <div class="d-grid col-7 mx-auto mt-5">
-        <button class='btn-secondary' type="submit" name="action" id="action" value="login">Entrar</button>
+        <button class='btn-secondary' type="submit" name="action" id="action" value="login" style="border-radius: 15px;">Entrar</button>
        <h6 class='mt-2'>Não possui cadastro? <a href="clientes/cadastro.php">Cadastre-se</a></h6>
     </div>
 </form>

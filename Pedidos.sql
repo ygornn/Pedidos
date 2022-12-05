@@ -30,7 +30,7 @@ PRIMARY KEY (codigo)
 );
 
 CREATE TABLE cliente (
-codigo INT AUTO_INCREMENT,
+codigo INT NOT NULL AUTO_INCREMENT,
 nome_cliente VARCHAR(45),
 usuario VARCHAR(20),
 data_nascimento DATE,
@@ -43,6 +43,9 @@ FOREIGN KEY (codigo_tipousuario) REFERENCES tipousuario(codigo) ON UPDATE CASCAD
 FOREIGN KEY (idendereco) REFERENCES endereco(idendereco) ON UPDATE CASCADE
 );
 
+drop table cliente;
+
+DROP TABLE cliente;
  CREATE TABLE pizza (
  codigo INT NOT NULL AUTO_INCREMENT,
  sabor VARCHAR(45),
@@ -69,3 +72,35 @@ CREATE TABLE bebida (
  imagem VARCHAR(95),
  PRIMARY KEY (codigo)
  );
+ 
+CREATE TABLE pedido (
+codigo INT NOT NULL AUTO_INCREMENT,
+codigo_cliente INT,
+hora DATETIME,
+PRIMARY KEY (codigo)
+);
+
+CREATE TABLE pedido_pizza (
+codigo_pedido INT NOT NULL,
+codigo_pizza INT,
+quantidade INT,
+FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo) ON UPDATE CASCADE,
+FOREIGN KEY (codigo_pizza) REFERENCES pizza(codigo) ON UPDATE CASCADE
+);
+
+CREATE TABLE pedido_lanche (
+codigo_pedido INT NOT NULL,
+codigo_lanche INT,
+quantidade INT,
+FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo) ON UPDATE CASCADE,
+FOREIGN KEY (codigo_lanche) REFERENCES lanche(codigo) ON UPDATE CASCADE
+);
+
+CREATE TABLE pedido_bebida (
+codigo_pedido INT NOT NULL,
+codigo_bebida INT,
+quantidade INT,
+FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo) ON UPDATE CASCADE,
+FOREIGN KEY (codigo_bebida) REFERENCES bebida(codigo) ON UPDATE CASCADE
+);
+SELECT * FROM pedido_lanche;

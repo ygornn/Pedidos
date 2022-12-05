@@ -29,7 +29,7 @@
         
             if($user == $data['usuario'] and $password == $data['senha']){
                 session_start();
-                $_SESSION['usuario'] = $user;
+                $_SESSION['usuario'] = ucfirst($user);
                 header("location:product.php");
             }
             else{

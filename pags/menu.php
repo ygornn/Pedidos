@@ -31,7 +31,7 @@
           <a href="cidade/cidade.php" class="nav-link">Cidades</a>
         </li>
         <li class="nav-item">
-          <a href="endereco/endereco.php" class="nav-link">Endereços</a>
+          <a href="pedidos/pedido.php" class="nav-link">Pedidos</a>
         </li>
       </ul>
     <div class="d-flex justify-content-end">
