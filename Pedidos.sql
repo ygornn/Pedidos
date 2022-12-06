@@ -43,9 +43,6 @@ FOREIGN KEY (codigo_tipousuario) REFERENCES tipousuario(codigo) ON UPDATE CASCAD
 FOREIGN KEY (idendereco) REFERENCES endereco(idendereco) ON UPDATE CASCADE
 );
 
-drop table cliente;
-
-DROP TABLE cliente;
  CREATE TABLE pizza (
  codigo INT NOT NULL AUTO_INCREMENT,
  sabor VARCHAR(45),
@@ -103,4 +100,3 @@ quantidade INT,
 FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo) ON UPDATE CASCADE,
 FOREIGN KEY (codigo_bebida) REFERENCES bebida(codigo) ON UPDATE CASCADE
 );
-SELECT * FROM pedido_lanche;
