@@ -12,7 +12,6 @@
     if($action == 'edit'){
       $code = isset($_GET['code']) ? $_GET['code'] : 0;
       $data = findById($code);
-      var_dump($data);
     }
   ?>
     <meta charset="UTF-8">

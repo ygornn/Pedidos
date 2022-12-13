@@ -1,179 +1,21 @@
 <?php 
   include_once '../header.php';
-  include_once 'acao.php';
   $connection = Conexao::getInstance();
   $search = isset($_POST['search']) ? $_POST['search'] : '';
-  $action = isset($_GET['action']) ? $_GET['action'] : '';
-  $next = isset($_GET['next']) ? $_GET['next'] : '';
-  
+  $query = $connection->query("SELECT pedido.codigo, nome_cliente, hora FROM pedido JOIN cliente ON pedido.codigo_cliente = cliente.codigo
+  WHERE nome_cliente LIKE '%$search%';");
 ?>
 <main class="mb-5 pb-5 mb-md-0">
-
 <div class="container">
-
 <h1 class='mt-5'>Pedidos</h1>
-
 <hr>
-    
     <div class='mb-4 col-xl-2'>
-      <a href="../product.php" class="text-black">
+        <a href="cadastro.php" class="text-black">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
         </svg>
-      </a>
+        </a>
     </div>
-    <?php if($next == ''){ ?>
-
-    <form action="<?=URL_BASE . 'pags/pedidos/acao.php'?>" method="post" enctype="multipart/form-data">
-    <div class="d-flex justify-content-start ms-4">
-
-      <div class="me-4 mb-3">
-        <label class="label-form" for="flavor">Cliente</label>
-        <select name="client" id="client" class="form-select">
-
-          <?php selectFrom('cliente', 'codigo', 'nome_cliente', 'email'); ?>
-
-        </select>
-      </div>
-
-      <div class="me-4">
-        <label class="label-form" for="value">Data e hora do pedido</label>
-        <input type="datetime-local" name="datetime" id="datetime" class="form-control" value="<?php if ($action == 'edit') echo $data['valor']; ?>">
-      </div>
-
-      <div class="mt-4">
-        <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Avançar</button>
-      </div>
-      <?php } ?>
-
-    <input type="hidden" name="insertIn" id='insertIn' value="pedido">
-    </fieldset> 
-    </form>
-
-<?php if($next == 'pizza'){ ?>
-  <div class="row mt-4">
-  <fieldset>
-
-  <div class="ms-4 mb-4">
-    <h5>Escolha de pizzas</h5>
-  </div>
-
-  <form action="<?=URL_BASE . 'pags/pedidos/acao.php'?>" method="post" enctype="multipart/form-data">
-    
-  <div class="d-flex justify-content-start ms-4">
-      <div class="me-4 mb-3 col-xl-1">
-        <label for="orderedCode" class="form-label">Pedido</label>
-          <?php getOrderedCode(); ?>
-      </div>
-
-      <div class="me-4 mb-3">
-        <label class="label-form" for="flavour">Sabor</label>
-        <select name="flavour[]" id="flavour[]" class="form-select col-xl-2">
-
-          <?php selectFrom('pizza','codigo', 'sabor', 'valor'); ?>
-
-        </select>
-      </div>
-
-      <div class="me-4 col-xl-1">
-        <label class="label-form" for="amount">Quantidade</label>
-        <input type="number" name="amount" id="amount" class="form-control" value="<?php if ($action == 'edit') echo $data['valor']; ?>">
-      </div>
-
-    <input type="hidden" name="insertIn" id='insertIn' value="pizza">
-      
-      <div class="mt-4 ms-4">
-        <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Avançar</button>
-      </div>
-    </fieldset>
-  </form>
-    <?php } ?>
-
-    <?php 
-    if($next == 'lanche'){ ?>
-
-      <div class="row mt-4">
-      <fieldset>
-      
-      <div class="ms-4 mb-4">
-        <h5>Escolha de lanches</h5>
-      </div>
-      
-    <form action="<?=URL_BASE . 'pags/pedidos/acao.php'?>" method="post" enctype="multipart/form-data">
-      
-    <div class="d-flex justify-content-start ms-4">
-
-      <div class="me-4 col-xl-1">
-        <label for="code" class="form-label">Pedido</label>
-        <?php getOrderedCode(); ?>
-      </div>
-
-      <div class="me-4 mb-3">
-        <label class="label-form" for="flavour">Lanche</label>
-        <select name="flavour[]" id="flavour[]" class="form-select col-xl-2">
-          <?php selectFrom('lanche','codigo', 'sabor', 'valor'); ?>
-        </select>
-      </div>
-      
-      <div class="me-4 col-xl-1">
-        <label class="label-form" for="value">Quantidade</label>
-        <input type="number" name="amount" id="amount" class="form-control" value="<?php if ($action == 'edit') echo $data['valor']; ?>">
-      </div>
-      
-      <input type="hidden" name="insertIn" id='insertIn' value="lanche">
-    
-      </fieldset>
-      
-      <div class="mt-4 ms-4">
-        <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Avançar</button>
-      </div>
-    </form>
-    <?php } ?>
-
-    <?php 
-    if($next == 'bebida'){ ?>
-    <div class="row mt-4">
-
-      <div class="ms-4">
-        <h5>Escolha de Bebidas</h5>
-      </div>
-
-      <form action="<?=URL_BASE . 'pags/pedidos/acao.php'?>" method="post" enctype="multipart/form-data">
-      
-      <fieldset>
-
-        <div class="d-flex justify-content-start ms-4">
-
-          <div class="me-4 col-xl-1">
-            <label for="code" class="form-label">Pedido</label>
-            <?php getOrderedCode(); ?>
-          </div>
-
-          <div class="me-4 mb-3">
-            <label class="label-form" for="flavour">Bebida</label>
-            <select name="flavour[]" id="flavour[]" class="form-select col-xl-2">
-
-              <?php selectFrom('bebida','codigo', 'sabor', 'valor'); ?>
-
-            </select>
-          </div>
-
-          <div class="me-4 col-xl-1">
-            <label class="label-form" for="amount">Quantidade</label>
-            <input type="number" name="amount" id="amount" class="form-control" value="<?php if ($action == 'edit') echo $data['valor']; ?>">
-          </div>
-
-          <div class="mt-4 ms-4">
-            <button type="submit" class="btn btn-danger" name='action' id='action' value='save'>Avançar</button>
-          </div>
-
-          <input type="hidden" name="insertIn" id='insertIn' value="bebida">
-
-        </fieldset>
-    </form>
-    <?php } ?>
-    </div>
-
         <form action="" method="post">
         <div class="d-flex justify-content-end">
             <div>
@@ -187,27 +29,34 @@
         </div>
         </div>
         </form>
-    <div class='container'>
-      <div class="d-flex justify-content-center">
-      <table class="table table-hover">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Cliente</th>
-          <th>Data e hora</th>
-          <th>Pedido</th>
-          <th>Total do pedido</th>
+          <th>Nome do Cliente</th>
+          <th>Data e Hora</th>
           <th>Ação</th>
         </tr>
       </thead>
       <tbody>
-      <?php readTablesRows();?>
+      <?php 
+        while($data = $query->fetch(PDO::FETCH_ASSOC)){
+          echo "<tr>  <td>{$data['codigo']}</td> <td>{$data['nome_cliente']}</td> <td>".date('d/m/Y H:i:s', strtotime($data['hora']))."</td> 
+          <td><a class='btn btn-primary btn-sm' href='show.php?code={$data['codigo']}'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-person-vcard-fill' viewBox='0 0 16 16'>
+          <path d='M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z'/>
+          </svg></a>
+          <a class='btn btn-warning btn-sm' href='cadastro.php?action=edit&code={$data['codigo']}'><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil-square' viewBox='0 0 16 16'>
+          <path d='M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z'/>
+          <path fill-rule='evenodd' d='M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z'/>
+          </svg></a></td>  </tr>";
+        }
+      ?>
       </tbody>
         </table>
     </div>
   </li>
- </ul>     
-      </div>
-    </div>  
+ </ul>       
+    </div>
+    </div>
 </main>
 <?php include_once '../footer.php'; ?>

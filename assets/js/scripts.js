@@ -18,3 +18,8 @@ const btn = document.querySelectorAll("#remove").forEach(x =>
         e.preventDefault();
         sweet(x.href);
     }));
+
+const flavour = document.querySelectorAll("flavour").forEach(x =>
+    x.addEventListener('select', function(e){
+        onselect(console.log( x))
+    }));

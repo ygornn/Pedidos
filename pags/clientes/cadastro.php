@@ -3,14 +3,13 @@
 <head>
   <?php include_once "../../conf/Conexao.php"; 
   include "acao.php";
+  include "../util.php";
     $pdo = Conexao::getInstance();
-    $userType = $pdo->query("SELECT * FROM tipousuario;");
 
     $action = isset($_GET['action']) ? $_GET['action'] : '';
     if($action == "edit"){
         $code = isset($_GET['code']) ? $_GET['code'] : 0;
         $data = findById($code);
-        $address = $pdo->query("SELECT * FROM endereco");
     }
   ?>
     <meta charset="UTF-8">
@@ -46,13 +45,7 @@
           <label for="usertype" class="form-label"><a href="../tipousuario/tipousuario.php">Tipo usuário</a></label>
           <select name="usertype" id="usertype" class="form-select">
             <?php 
-              if($action == 'edit'){
-                $userType = $pdo->query("SELECT * FROM tipousuario WHERE codigo!={$data['codigo_tipousuario']};");
-                echo "<option value='{$data['codigo_tipousuario']}' select>{$data['descricao']}</option>";
-              }
-              while($userTypeData = $userType->fetch(PDO::FETCH_ASSOC)){
-                echo "<option value='{$userTypeData['codigo']}'>{$userTypeData['descricao']}</option>";
-              }
+              buildSelect('tipoUsuario', 'codigo', 'descricao', $data['codigo_tipousuario']);
             ?>
           </select>
         </div>
@@ -99,13 +92,8 @@
               <label for="address" class="form-label" required>Endereço</label>
               <select name="address" id="address" class="form-select">
                 <?php
-                  if($action == 'edit'){
-                    $address = $pdo->query("SELECT * FROM endereco WHERE idendereco!={$data['idendereco']};");
-                    echo "<option value='{$data['idendereco']}' select>{$data['nome_endereco']}</option>";
-                  }
-                  while ($addressData = $address->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<option value='{$addressData['idendereco']}'>{$addressData['nome_endereco']}</option>";
-                } ?>
+                    buildSelect('endereco', 'idendereco', 'nome_endereco', $data['idendereco'])
+                 ?>
               </select>
             </div>
         </div>

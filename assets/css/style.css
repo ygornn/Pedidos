@@ -84,3 +84,14 @@ a:link{
     width: 200px;
     height: 180px;
 }
+
+.ordered{
+    background-image: linear-gradient(to bottom right, rgb(255, 0, 0),rgb(255, 193, 193));
+    padding-top: 0.4rem;
+    padding-bottom: 2rem;
+    margin-left: 1.5rem;
+    margin-right: 25rem;
+    border-radius: 2rem;
+    color: #ffffff;
+    box-shadow: 8px 6px 8px rgba(0, 0, 0, 0.1);
+}
